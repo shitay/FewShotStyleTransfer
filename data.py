@@ -4,9 +4,10 @@ Licensed under the CC BY-NC-SA 4.0 license
 (https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode).
 """
 import os.path
-from PIL import Image
 
+import pandas as pd
 import torch.utils.data as data
+from PIL import Image
 
 
 def default_loader(path):
@@ -27,19 +28,18 @@ class ImageLabelFilelist(data.Dataset):
                  root,
                  filelist,
                  transform=None,
-                 filelist_reader=default_filelist_reader,
                  loader=default_loader,
-                 return_paths=False):
+                 return_paths=False,
+                 style_type='artist'):
         self.root = root
-        self.im_list = filelist_reader(os.path.join(filelist))
         self.transform = transform
         self.loader = loader
-        self.classes = sorted(
-            list(set([path.split('/')[0] for path in self.im_list])))
-        self.class_to_idx = {self.classes[i]: i for i in
-                             range(len(self.classes))}
-        self.imgs = [(im_path, self.class_to_idx[im_path.split('/')[0]]) for
-                     im_path in self.im_list]
+        df = pd.read_csv(filelist)
+        self.classes = sorted(list(df[style_type]))
+        self.class_to_idx = {self.classes[i]: i for i in range(len(self.classes))}
+
+        self.imgs = [(im_name, self.class_to_idx[cls])
+                     for _, (im_name, cls) in df[['filename', style_type]].iterrows()]
         self.return_paths = return_paths
         print('Data loader')
         print("\tRoot: %s" % root)

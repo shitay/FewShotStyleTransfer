@@ -12,7 +12,7 @@ python train.py --config configs/funit_animals.yaml --multigpus
 
 The training results including the checkpoints and intermediate results will be stored in `outputs/funit_animals`.
 
-For custom dataset, you would need to write an new configuration file. Please create one based on the [example config file](configs/funit_animals.yaml).
+For custom dataset, you would need to write an new configuration file. Please create one based on the [example config file](configs/painter_by_numbers.yaml).
 
 ## Testing pretrained model
 
