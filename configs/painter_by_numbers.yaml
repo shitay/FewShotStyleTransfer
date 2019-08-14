@@ -30,11 +30,11 @@ gen:
 dis:
   nf: 64                      # base number of filters
   n_res_blks: 10              # number of residual blocks in the discriminator
-  num_classes: 119            # number of classes in the training set
+  num_classes: 1584            # number of classes in the training set
 
 # data options
 num_workers: 4
-batch_size: 16
+batch_size: 4
 new_size: 140                 # first resize the shortest image side to this size
 crop_image_height: 128        # random crop image of this height
 crop_image_width: 128         # random crop image of this width

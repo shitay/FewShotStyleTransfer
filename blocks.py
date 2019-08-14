@@ -140,9 +140,9 @@ class Conv2dBlock(nn.Module):
 
         # initialize activation
         if activation == 'relu':
-            self.activation = nn.ReLU(inplace=True)
+            self.activation = nn.ReLU()
         elif activation == 'lrelu':
-            self.activation = nn.LeakyReLU(0.2, inplace=True)
+            self.activation = nn.LeakyReLU(0.2)
         elif activation == 'tanh':
             self.activation = nn.Tanh()
         elif activation == 'none':

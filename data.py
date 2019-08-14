@@ -35,16 +35,17 @@ class ImageLabelFilelist(data.Dataset):
         self.transform = transform
         self.loader = loader
         df = pd.read_csv(filelist)
-        self.classes = sorted(list(df[style_type]))
+        self.classes = sorted(list(set(df[style_type])))
         self.class_to_idx = {self.classes[i]: i for i in range(len(self.classes))}
-
         self.imgs = [(im_name, self.class_to_idx[cls])
-                     for _, (im_name, cls) in df[['filename', style_type]].iterrows()]
+                     for _, (im_name, cls) in df[['filename', style_type]].iterrows()
+                     if os.path.exists(os.path.join(self.root, im_name))]
         self.return_paths = return_paths
         print('Data loader')
         print("\tRoot: %s" % root)
         print("\tList: %s" % filelist)
         print("\tNumber of classes: %d" % (len(self.classes)))
+        print("\tNumber of images: %d" % (len(self.imgs)))
 
     def __getitem__(self, index):
         im_path, label = self.imgs[index]
