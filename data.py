@@ -8,7 +8,9 @@ import os.path
 import pandas as pd
 import torch.utils.data as data
 from PIL import Image
-
+from PIL import ImageFile
+Image.MAX_IMAGE_PIXELS = None
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 def default_loader(path):
     return Image.open(path).convert('RGB')
