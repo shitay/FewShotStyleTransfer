@@ -39,6 +39,6 @@ new_size: 140                 # first resize the shortest image side to this siz
 crop_image_height: 128        # random crop image of this height
 crop_image_width: 128         # random crop image of this width
 data_folder_train: ./datasets/train
-data_list_train: ./datasets/train_info.csv
+data_list_train: ./datasets/train.csv
 data_folder_test: ./datasets/train
-data_list_test: ./datasets/train_info.csv
+data_list_test: ./datasets/test.csv
