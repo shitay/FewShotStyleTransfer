@@ -34,7 +34,7 @@ dis:
 
 # data options
 num_workers: 4
-batch_size: 16
+batch_size: 8
 new_size: 140                 # first resize the shortest image side to this size
 crop_image_height: 128        # random crop image of this height
 crop_image_width: 128         # random crop image of this width
