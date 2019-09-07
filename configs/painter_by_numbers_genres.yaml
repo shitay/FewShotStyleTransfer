@@ -16,7 +16,7 @@ lr_dis: 0.0001                # learning rate for the discriminator
 init: kaiming                 # initialization [gaussian/kaiming/xavier/orthogonal]
 gan_w: 1                      # weight of adversarial loss for image translation
 fm_w: 1                       # weight on distance between gan features of style and translated image
-r_w: 0.3                      # weight of image reconstruction loss
+r_w: 0.5                      # weight of image reconstruction loss
 
 # model options
 gen:
@@ -30,7 +30,7 @@ gen:
 dis:
   nf: 64                      # base number of filters
   n_res_blks: 10              # number of residual blocks in the discriminator
-  num_classes: 173            # number of classes in the training set
+  num_classes: 14             # number of classes in the training set
 
 # data options
 num_workers: 4

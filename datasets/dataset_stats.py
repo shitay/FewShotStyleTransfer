@@ -37,23 +37,39 @@ def minimum_images():
     print(len(df_train))
 
 
-def move_files(old_path, new_path):
-    df = pd.read_csv('train.csv')
-    artists = list(set(df['artist']))
-    counts = {artist: len(df[df.artist == artist]) for artist in artists if len(df[df.artist == artist]) >= 100}
+def copy_files(ref_csv, old_path, new_path):
+    df = pd.read_csv(ref_csv)
     for i, row in df.iterrows():
-        _, filename, artist, title, style, genere, date = row
-        if artist in counts:
-            src_path = os.path.join(old_path, filename)
-            dst_path = os.path.join(new_path, filename)
-            if os.path.exists(src_path):
-                if not os.path.exists(dst_path):
-                    shutil.move(src_path, dst_path)
+        _, _, filename, artist, title, style, genere, date = row
+        src_path = os.path.join(old_path, filename)
+        dst_path = os.path.join(new_path, filename)
+        if os.path.exists(src_path):
+            if not os.path.exists(dst_path):
+                shutil.copy(src_path, dst_path)
+
+
+def min_dataset(style_type, n_sub_types, n_min_for_type, n_max_for_type):
+    df = pd.read_csv('train.csv')
+    sub_types = list(set(df[style_type]))
+    counts = {sub_type: len(df[df[style_type] == sub_type]) for sub_type in sub_types
+              if n_min_for_type <= len(df[df[style_type] == sub_type]) <= n_max_for_type}
+    counts = Counter(counts)
+    counts_top = dict(counts.most_common(n_sub_types))
+
+    df_train = df[df[style_type].isin(list(counts_top.keys()))]
+    print(len(df_train))
+    df_train.to_csv(f'{style_type}_train.csv')
+
+    print(list(counts_top.keys()), len(counts_top))
 
 
 if __name__ == '__main__':
-    stats()
+    # stats()
     # split_train_test()
     # stats('train.csv')
     # stats('test.csv')
     # minimum_images()
+    # min_dataset('genre', 20, n_min_for_type=1000, n_max_for_type=2000)  # 'artist', 'style', 'genre'
+    # min_dataset('style', 20, n_min_for_type=1000, n_max_for_type=2000)
+    # min_dataset('artist', 20, n_min_for_type=150, n_max_for_type=300)
+    copy_files('genre_train.csv', 'train', 'train_genre')
